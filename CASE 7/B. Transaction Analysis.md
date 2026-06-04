@@ -81,25 +81,6 @@ WITH rev As
 ),
 member_rev AS
 ( 
-  SELECT txn_id,SUM(total_price) - SUM(disc) AS total_rev,
-  member
-  FROM rev
-  GROUP BY txn_id,member
-)
-SELECT SUM(total_rev)* 1.0 /COUNT(txn_id)
-FROM member_rev
-GROUP BY member
-```sql
-WITH rev As
-(
-  SELECT txn_id, price * qty AS total_price,
-  qty * price * discount / 100.0 AS disc,
-  member
-  FROM
-  balanced_tree.sales
-),
-member_rev AS
-( 
   SELECT txn_id,SUM(total_price) AS total_rev,
   member
   FROM rev
